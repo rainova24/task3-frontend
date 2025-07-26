@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Aplikasi Frontend</title>
+    <style>body { font-family: system-ui, sans-serif; text-align: center; padding-top: 5rem; }</style>
+</head>
+<body>
+    <h1>Selamat Datang di Frontend Server!</h1>
+    <p>Data dari Backend:</p>
+    <pre id="data-container" style="background-color: #eee; padding: 1rem; border-radius: 5px;">Memuat...</pre>
+
+    <script>
+        // Mengambil data dari endpoint /api/ yang akan di-proxy oleh Nginx
+        fetch('/api/')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('data-container').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('data-container').textContent = 'Gagal memuat data dari backend.';
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>
