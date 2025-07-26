@@ -1,0 +1,25 @@
+name: Deploy Frontend to EC2
+
+# Pemicu: Aksi ini akan berjalan setiap kali ada push ke branch 'main'
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Langkah 1: Mengambil kode dari repositori
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Langkah 2: Menyalin file ke server EC2 menggunakan SCP
+      - name: SCP to EC2
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "index.html"
+          target: "/var/www/html"
